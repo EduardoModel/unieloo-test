@@ -1,84 +1,79 @@
 import React from 'react'
-
+import breakPointMinWidth from './../sizes/sizes'
 import styled from 'styled-components'
 
 const Img = styled.img`
-    align: left;
     width: 200px;
     height: 200px;
     border-radius: 20px;
-`;
+    margin: 12px;
+`
 
-const InfoProfi = styled.div`
-    text-align:left;
-    postition:relative;
-    margin-left: 220px;
-    margin-top: -220px
-    display: block;
-    background-color: lightblue;
-    width:470px;
-    font-size:100%;
-    padding-left:20px;
-    border-radius:20px;
-    height:200px;
-`;
-
-const Services = styled.div`
-    background-color: #973CA5;
-    width:697px;
-    height:200px;
-    padding-left:15px;
-    padding-top:1px;
-    margin-top:5px;
+const MainDiv = styled.div`
+    background-color: #FF6336;
     border-radius: 20px;
-    align-items: center;
-    margin-bottom: -110px;
-`;
+    margin-top: 10px;
+    overflow:hidden;
+    text-align: center;
 
-const Service = styled.div`
-    align-content: inline;
-    float: left;
-    margin-right: 40px;
-    margin-left: 30px;
-    background-color: yellow;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 20px;
-`;
+    @media ${breakPointMinWidth}{
+        text-align: left; 
+        width: 900px;
+        display: flex;
+        height: 380px;
+    }
+`
+const ServicesDiv = styled.div`
+    @media ${breakPointMinWidth}{
+        margin-left: 10px;
+    }
+`
+
+const P = styled.p`
+    font-family: "Arial";
+    font-size: 18px;
+    color: white;
+`
+
+const H3 = styled.h3`
+    font-family: "Arial";
+    color: white;
+    font-size: 22px;
+` 
 
 
 const Professional = (props) => {
     const info = props.props || {}
     return (
-        <div>
+        <MainDiv>
             <Img src={info.User.profileImg} alt="Profile Image"></Img>
             <div>
-                <h3>{info.Specialization.name}</h3>
-                <p>{info.User.name}, {info.cr}</p>
-                <p>{info.addressName}, {info.addressNumber}, {info.district}. CEP: {info.cep}, {info.city}-{info.state.toUpperCase()}</p>
-                <p>{info.description}</p>
-                <p>Email: {info.User.email}</p>
-                <p>Telefone: {info.User.phoneNumber}</p>
+                <H3>{info.Specialization.name}</H3>
+                <P>{info.User.name}, {info.cr}</P>
+                <P>{info.addressName}, {info.addressNumber}, {info.district}. CEP: {info.cep}, {info.city}-{info.state.toUpperCase()}</P>
+                <P>{info.description}</P>
+                <P>{info.User.email}</P>
+                <P>{info.User.phoneNumber}</P>
             </div>
 
-            <div>
-            <h3>Serviços</h3>
-            {info.Services.map((service) => (
+            <ServicesDiv>
+            <H3>Serviços</H3>
+            {info.Services.map((service, index) => (
                 props.preco > 0 ? parseInt(service.value, 10) <= props.preco &&
-                <div>
-                <p>{service.description}</p>
-                <p>Valor: {service.value === "0.00"? 'Grátis': `R$ ${service.value}`}</p>
-                <p>Duração: {service.duration} minutos</p>
+                <div key={index}>
+                <P>{service.description}</P>
+                <P>Valor: {service.value === "0.00"? 'Grátis': `R$ ${service.value}`}</P>
+                <P>Duração: {service.duration} minutos</P>
                 </div> 
                 : 
-                <div>
-                <p>{service.description}</p>
-                <p>Valor: {service.value === "0.00"? 'Grátis': `R$ ${service.value}`}</p>
-                <p>Duração: {service.duration} minutos</p>
+                <div key={index}>
+                <P>{service.description}</P>
+                <P>Valor: {service.value === "0.00"? 'Grátis': `R$ ${service.value}`}</P>
+                <P>Duração: {service.duration} minutos</P>
                 </div>
             ))}
-            </div>
-        </div>
+            </ServicesDiv>
+        </MainDiv>
     )
 }
     
