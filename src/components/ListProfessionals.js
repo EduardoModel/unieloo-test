@@ -15,8 +15,8 @@ const PageNumbers = styled.ul`
     margin-left: -40px;
     @media ${breakPointMinWidth}{
         display:block;
-        text-align: center;
-        margin-left: -600px;
+        text-align: left;
+        margin-left: 380px;
     }
 `
 
@@ -26,8 +26,9 @@ const PageNumbersLi = styled.li`
     user-select: none;
     cursor: pointer;
     display: inline-table;
+    font-weight: ${props => props.weight};
 `
-
+//font-weight: ${props => props.key === props.currentPage? 'bold': 'normal'}
 const ListProfesionals = ({infoFilter}) => {
     const profiPerPage = 1;
     const [currentPage, setCurrentPage] = useState(1)
@@ -40,7 +41,7 @@ const ListProfesionals = ({infoFilter}) => {
     const indexOfFirtProfi = indexOfLastPofi - profiPerPage
     const currentProfis = profiSelected.slice(indexOfFirtProfi, indexOfLastPofi)
     const pageNumbers = []
-    for (let i = 1; i<=Math.ceil(profiSelected.length/profiPerPage); i++){
+    for (let i = 1; i<Math.ceil(profiSelected.length/profiPerPage); i++){
         pageNumbers.push(i)
     }
 
@@ -53,17 +54,18 @@ const ListProfesionals = ({infoFilter}) => {
     const handleClick = (e) => {
         setCurrentPage(e.target.id)
     }
-
  
     const renderPageNumbers = pageNumbers.map((number) => {
+        const weight = currentPage === number ? 'bold' : 'normal'
         return( 
-                <PageNumbersLi
-                key={number}
-                id={number}
-                onClick={handleClick}
-                >
-                {number}
-                </PageNumbersLi>
+            <PageNumbersLi
+            key={number}
+            id={number}
+            weight={weight}
+            onClick={handleClick}
+            >
+            {number}
+            </PageNumbersLi>
         )
     })
 
